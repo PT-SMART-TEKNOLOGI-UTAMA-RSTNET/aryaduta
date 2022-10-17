@@ -22,10 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('phone',30)->nullable();
             $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
-            $table->bigInteger('province')->nullable();
-            $table->bigInteger('city')->nullable();
-            $table->bigInteger('district')->nullable();
-            $table->bigInteger('village')->nullable();
+            $table->bigInteger('province',false,true)->nullable();
+            $table->bigInteger('city',false,true)->nullable();
+            $table->bigInteger('district',false,true)->nullable();
+            $table->bigInteger('village',false,true)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
