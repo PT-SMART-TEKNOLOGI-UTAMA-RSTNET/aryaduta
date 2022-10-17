@@ -34,3 +34,16 @@ Route::group(['prefix' => 'users'], function (){
     Route::get('/levels', function (){ return view('users.levels'); })->name('users.levels');
     Route::get('/privileges', function (){ return view('users.privileges'); })->name('users.privileges');
 });
+Route::group(['prefix' => 'wifi'], function (){
+    Route::get('/', function (){ return view('wifi.wifi'); })->name('wifi');
+    Route::get('/routers', function (){ return view('wifi.routers'); })->name('wifi.routers');
+    Route::group(['prefix' => 'profiles'], function (){
+        Route::get('/pools', function (){ return view('wifi.profiles.pools'); })->name('wifi.profiles.pools');
+        Route::get('/pppoe', function (){ return view('wifi.profiles.pppoe'); })->name('wifi.profiles.pppoe');
+        Route::get('/hotspot', function (){ return view('wifi.profiles.hotspot'); })->name('wifi.profiles.hotspot');
+    });
+    Route::group(['prefix' => 'users'], function (){
+        Route::get('/pppoe', function (){ return view('wifi.users.pppoe'); })->name('wifi.users.pppoe');
+        Route::get('/hotspot', function (){ return view('wifi.users.hotspot'); })->name('wifi.users.hotspot');
+    });
+});

@@ -46,6 +46,35 @@ class MenuSeeder extends Seeder
                 ]
             ])
         ]);
+        $dumps->push((object)[
+            'route' => 'wifi', 'name' => 'Wifi', 'locale_id' => 'aryaduta_wifi.wifi', 'description' => null, 'icon' => 'fa fa-wifi',
+            'childrens' => collect([
+                (object)[
+                    'route' => 'wifi.routers', 'name' => 'Router Wifi', 'locale_id' => 'aryaduta_wifi.router',
+                    'description' => null, 'icon' => 'fa fa-server',
+                ],
+                (object)[
+                    'route' => 'wifi.profiles.pools', 'name' => 'Profile Pool', 'locale_id' => 'aryaduta_wifi.profiles.pools',
+                    'description' => null, 'icon' => 'fa fa-user-cog'
+                ],
+                (object)[
+                    'route' => 'wifi.profiles.pppoe', 'name' => 'Profile PPPoE', 'locale_id' => 'aryaduta_wifi.profiles.pppoe',
+                    'description' => null, 'icon' => 'fa fa-user-cog'
+                ],
+                (object)[
+                    'route' => 'wifi.profiles.hotspot', 'name' => 'Profile Hotspot', 'locale_id' => 'aryaduta_wifi.profiles.hotspot',
+                    'description' => null, 'icon' => 'fa fa-user-cog',
+                ],
+                (object)[
+                    'route' => 'wifi.users.pppoe', 'name' => 'User PPPoE', 'locale_id' => 'aryaduta_wifi.users.pppoe',
+                    'description' => null, 'icon' => 'fa fa-user-cog'
+                ],
+                (object)[
+                    'route' => 'wifi.users.hotspot', 'name' => 'User Hotspot', 'locale_id' => 'aryaduta_wifi.users.hotspot',
+                    'description' => null, 'icon' => 'fa fa-user-cog'
+                ]
+            ])
+        ]);
 
         $notDeletes = collect();
         $this->command->getOutput()->progressStart($dumps->count());
