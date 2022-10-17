@@ -38,12 +38,8 @@ class MenuSeeder extends Seeder
             'childrens' => collect([
                 (object)[
                     'route' => 'users.levels', 'name' => 'User Level', 'locale_id' => 'aryaduta_users.level',
-                    'description' => null, 'icon' => 'fa fa-user-secret',
-                ],
-                (object)[
-                    'route' => 'users.privileges', 'name' => 'User Privilege', 'locale_id' => 'aryaduta_users.privileges',
                     'description' => null, 'icon' => 'fa fa-user-shield'
-                ]
+                ],
             ])
         ]);
         $dumps->push((object)[

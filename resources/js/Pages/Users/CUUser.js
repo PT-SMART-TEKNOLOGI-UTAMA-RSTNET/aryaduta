@@ -87,6 +87,7 @@ class CUUser extends React.Component{
                                             <li key={index}>
                                                 <b>{item.label}</b>
                                                 <span style={{float:'right'}}>
+                                                    { item.meta.privs.r ? <small className="text-success">Read</small> : <small className="text-danger">Read</small> },&nbsp;
                                                     { item.meta.privs.c ? <small className="text-success">Create</small> : <small className="text-danger">Create</small> },&nbsp;
                                                     { item.meta.privs.u ? <small className="text-success">Update</small> : <small className="text-danger">Update</small> },&nbsp;
                                                     { item.meta.privs.d ? <small className="text-success">Delete</small> : <small className="text-danger">Delete</small> }
@@ -96,6 +97,7 @@ class CUUser extends React.Component{
                                                         <li key={index1} className="text-muted">
                                                             <b>{item1.label}</b>
                                                             <span style={{float:'right'}}>
+                                                                { item1.meta.privs.r ? <small className="text-success">Read</small> : <small className="text-danger">Read</small> },&nbsp;
                                                                 { item1.meta.privs.c ? <small className="text-success">Create</small> : <small className="text-danger">Create</small> },&nbsp;
                                                                 { item1.meta.privs.u ? <small className="text-success">Update</small> : <small className="text-danger">Update</small> },&nbsp;
                                                                 { item1.meta.privs.d ? <small className="text-success">Delete</small> : <small className="text-danger">Delete</small> }

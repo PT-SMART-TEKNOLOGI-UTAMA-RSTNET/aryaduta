@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserLevelController;
+use App\Http\Controllers\User\UserPrivilegeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,4 +29,5 @@ Route::group(['prefix' => 'auth'], function (){
 Route::group(['prefix' => 'users'], function (){
     Route::any('/', [UserController::class, 'crud'])->middleware('auth:api');
     Route::any('/levels', [UserLevelController::class, 'crud'])->middleware('auth:api');
+    Route::any('/privileges', [UserPrivilegeController::class, 'crud'])->middleware('auth:api');
 });
