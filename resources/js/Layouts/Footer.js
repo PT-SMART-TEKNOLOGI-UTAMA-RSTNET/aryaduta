@@ -10,13 +10,10 @@ class Footer extends React.Component{
             <footer>
                 <div className="footer clearfix mb-0 text-muted">
                     <div className="float-start">
-                        <p>2021 &copy; RSTnet</p>
+                        <p>2021 &copy; Hotel Aryaduta </p>
                     </div>
                     <div className="float-end">
-                        <p>
-                            Crafted with <span className="text-danger"><i className="bi bi-heart-fill icon-mid"/></span>
-                            by <a href="https://www.rst.net.id">RSTnet</a>
-                        </p>
+                        <p> <a href="https://www.rst.net.id">Versi {process.env.MIX_APP_VER}</a> </p>
                     </div>
                 </div>
             </footer>

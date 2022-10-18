@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix
+    .js('resources/js/src/rooms/rooms.js','public/js/rooms')
     .js('resources/js/src/users/levels.js','public/js/users')
     .js('resources/js/src/users/users.js','public/js/users')
     .js('resources/js/src/dashboard/dashboard.js','public/js')
