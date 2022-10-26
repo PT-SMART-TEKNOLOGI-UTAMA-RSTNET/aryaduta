@@ -17,12 +17,17 @@ import {showError} from "../../Components/Toaster";
 import {checkAuth} from "../../Components/AuthCheck";
 import Swal from "sweetalert2";
 import Axios from 'axios';
-import {crudRoom} from "../../Services/RoomServices";
+import {loadRoom} from "../../Services/RoomServices";
 
 $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn';
 $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
     return false;
 };
+
+import CreateRooms from "./Modals/CreateRooms";
+import UpdateRooms from "./Modals/UpdateRooms";
+import User from "./Stats/User";
+import Guest from "../Dashboard/Stats/Guest";
 
 class Rooms extends React.Component{
     constructor(props) {
@@ -31,7 +36,10 @@ class Rooms extends React.Component{
             current_user : JSON.parse(localStorage.getItem('_user')),
             token : JSON.parse(localStorage.getItem('_token')),
             rooms : [],
-            modals : { open : false, data : null },
+            modals : {
+                create:{open:false, data:null},
+                update:{open:false, data:null}
+            },
         };
         this.loadRooms = this.loadRooms.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
@@ -40,11 +48,11 @@ class Rooms extends React.Component{
         checkAuth();
         this.loadRooms();
     }
-    toggleModal(data = null) {
+    toggleModal(what, data = null) {
         let modals = this.state.modals;
-        modals.open = ! this.state.modals.open;
-        modals.data = data;
-        this.setState({modals});
+        modals[what].open = !this.state.modals[what].open;
+        if (data !== null) modals[what].data = data;
+        this.setState({ modals });
     }
     confirmDelete(data = null) {
         const formData = new FormData();
@@ -58,17 +66,17 @@ class Rooms extends React.Component{
             });
         }
         Swal.fire({
-            title: "Perhatian !", html: `Anda yakin ingin Hapus user ?`, icon: "question", showCancelButton: true, confirmButtonColor: "#FF9800",
+            title: "Perhatian !", html: `Anda yakin ingin Hapus Room ?`, icon: "question", showCancelButton: true, confirmButtonColor: "#FF9800",
             confirmButtonText: "Hapus", cancelButtonText: "Batalkan", cancelButtonColor: '#ddd', closeOnConfirm : false,
             showLoaderOnConfirm: true, allowOutsideClick: () => ! Swal.isLoading(), allowEscapeKey : () => ! Swal.isLoading(),
             preConfirm : (e)=> {
-                return Promise.resolve(Axios({headers : { "Accept" : "application/json", "Authorization" : "Bearer " + checkAuth() }, method : 'post', data : formData, url : window.origin + '/api/users'}))
+                return Promise.resolve(Axios({headers : { "Accept" : "application/json", "Authorization" : "Bearer " + checkAuth() }, method : 'post', data : formData, url : window.origin + '/api/rooms/crud'}))
                     .then((response) => {
                         if (response.data.params === null){
                             Swal.showValidationMessage(response.data.message, true);
                             Swal.hideLoading();
                         } else {
-                            this.loadUsers();
+                            this.loadRooms();
                             Swal.close();
                             showSuccess(response.data.message);
                         }
@@ -82,7 +90,7 @@ class Rooms extends React.Component{
     async loadRooms(){
         this.setState({rooms:[]});
         try {
-            let response = await crudRoom(checkAuth(),null);
+            let response = await loadRoom(checkAuth(),null);
             if (response.data.params === null) {
                 showError(response.data.message);
             } else {
@@ -109,7 +117,7 @@ class Rooms extends React.Component{
                 },
                 {
                     text: '<i class="fa fa-plus"/>', className: 'btn-sm btn-primary',
-                    action : (d, dt, node, config) => { this.toggleModal(null) }
+                    action : (d, dt, node, config) => { this.toggleModal('create',null) }
                 },
                 {
                     text: '<i class="fa fa-trash"/>', className: 'btn-sm btn-danger',
@@ -128,22 +136,22 @@ class Rooms extends React.Component{
                 },
                 {
                     targets : 2, orderable : true,
-                    render : (data, type, row) => { return row.meta.email }
+                    render : (data, type, row) => { return row.meta.nomor }
                 },
                 {
                     targets : 3, orderable : true,
-                    render : (data, type, row) => { return row.meta.level.label }
+                    render : (data, type, row) => { return row.meta.lantai }
                 },
                 {
                     createdCell:(td,cellData,rowData,row,col) => {
                         ReactDOM.render(
                             <div className="btn-group btn-group-sm">
                                 <div className="dropdown">
-                                    <button className="btn btn-sm btn-primary dropdown-toggle me-1" type="button" id={`dropdownMenuButton-${rowData.value}`} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button className="btn btn-sm btn-primary me-1" type="button" id={`dropdownMenuButton-${rowData.value}`} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i className="fa fa-grip-lines"/>
                                     </button>
                                     <div className="dropdown-menu" aria-labelledby={`dropdownMenuButton-${rowData.value}`}>
-                                        <a onClick={()=>this.toggleModal(rowData)} className="dropdown-item" href="#"><i className="fa fa-edit"/> Edit</a>
+                                        <a onClick={()=>this.toggleModal('update',rowData)} className="dropdown-item" href="#"><i className="fa fa-edit"/> Edit</a>
                                         <a onClick={()=>this.confirmDelete(rowData)} className="dropdown-item" href="#"><i className="fa fa-trash"/> Delete</a>
                                     </div>
                                 </div>
@@ -158,12 +166,17 @@ class Rooms extends React.Component{
     render() {
         return (
             <>
+                <UpdateRooms open={this.state.modals.update.open} handleUpdate={this.loadRooms} handleClose={this.toggleModal} token={this.state.token} data={this.state.modals.update.data}/>
+                <CreateRooms open={this.state.modals.create.open} handleClose={this.toggleModal} handleUpdate={this.loadRooms} token={this.state.token}/>
                 <Sidebar route={this.props.route}/>
                 <div id="main" className='layout-navbar'>
                     <Topbar/>
                     <div id="main-content">
                         <div className="page-heading">
                             <section className="section">
+                                <div className="row">
+                                    {this.state.current_user.meta.type === 'user' ? <User jmlKamar={this.state.rooms}/> : <Guest jmlKamar={this.state.rooms}/>}
+                                </div>
                                 <div className="card">
                                     <table id="dataTable" className="table table-striped">
                                         <thead>
@@ -173,10 +186,10 @@ class Rooms extends React.Component{
                                                     $('#dataTable tbody input:checkbox').prop({checked:e.target.checked});
                                                 }} type="checkbox"/>
                                             </th>
-                                            <th className="align-middle text-center">Nama</th>
-                                            <th className="align-middle text-center">Email</th>
-                                            <th className="align-middle text-center">Level</th>
-                                            <th className="align-middle text-center" width="70px">Aksi</th>
+                                            <th className="align-middle">Nama</th>
+                                            <th className="align-middle">Nomor</th>
+                                            <th className="align-middle">Lantai</th>
+                                            <th className="align-middle" width="70px">Aksi</th>
                                         </tr>
                                         </thead>
                                     </table>

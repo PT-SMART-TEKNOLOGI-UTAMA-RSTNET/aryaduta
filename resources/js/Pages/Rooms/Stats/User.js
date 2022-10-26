@@ -1,41 +1,28 @@
 import React from "react";
 
-class Guest extends React.Component{
+class User extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             current_user : JSON.parse(localStorage.getItem('_user')),
-            jml_kamar:0,
+            count:{jml_kamar:props.jmlKamar.length}
         }
+    }
+
+    componentDidMount(props) {
+        console.log(this.state.count.jml_kamar);
+
     }
 
     componentWillReceiveProps(props) {
         if(props.jmlKamar !== null){
-            this.setState({jml_kamar:props.jmlKamar.length})
+            console.log(props.jmlKamar);
         }
     }
 
     render() {
         return (
             <>
-                <div className="col-6 col-sm-12 col-md-6 col-lg-3">
-                    <div className="card">
-                        <div className="card-body px-4 py-4-5">
-                            <div className="row">
-                                <div
-                                    className="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                    <div className="stats-icon green mb-2">
-                                        <i className="fa fa-bed"/>
-                                    </div>
-                                </div>
-                                <div className="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 className="text-muted font-semibold">Room Number</h6>
-                                    <h6 className="font-extrabold mb-0">{this.state.jml_kamar}</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div className="col-6 col-sm-12 col-md-6 col-lg-3">
                     <div className="card">
                         <div className="card-body px-4 py-4-5">
@@ -60,12 +47,30 @@ class Guest extends React.Component{
                                 <div
                                     className="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                     <div className="stats-icon red mb-2">
-                                        <i className="fa fa-calendar"/>
+                                        <i className="fa fa-bed"/>
                                     </div>
                                 </div>
                                 <div className="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 className="text-muted font-semibold">Last Visit</h6>
+                                    <h6 className="text-muted font-semibold">Empty Room</h6>
                                     <h6 className="font-extrabold mb-0">183.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-6 col-sm-12 col-md-6 col-lg-3">
+                    <div className="card">
+                        <div className="card-body px-4 py-4-5">
+                            <div className="row">
+                                <div
+                                    className="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div className="stats-icon green mb-2">
+                                        <i className="fa fa-bed"/>
+                                    </div>
+                                </div>
+                                <div className="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 className="text-muted font-semibold">Used Room</h6>
+                                    <h6 className="font-extrabold mb-0">80.000</h6>
                                 </div>
                             </div>
                         </div>
@@ -94,4 +99,4 @@ class Guest extends React.Component{
     }
 }
 
-export default Guest;
+export default User;

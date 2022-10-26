@@ -4,17 +4,9 @@ class Guest extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            current_user : JSON.parse(localStorage.getItem('_user')),
-            jml_kamar:0,
+            current_user : JSON.parse(localStorage.getItem('_user'))
         }
     }
-
-    componentWillReceiveProps(props) {
-        if(props.jmlKamar !== null){
-            this.setState({jml_kamar:props.jmlKamar.length})
-        }
-    }
-
     render() {
         return (
             <>
@@ -30,7 +22,7 @@ class Guest extends React.Component{
                                 </div>
                                 <div className="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 className="text-muted font-semibold">Room Number</h6>
-                                    <h6 className="font-extrabold mb-0">{this.state.jml_kamar}</h6>
+                                    <h6 className="font-extrabold mb-0">80.000</h6>
                                 </div>
                             </div>
                         </div>
