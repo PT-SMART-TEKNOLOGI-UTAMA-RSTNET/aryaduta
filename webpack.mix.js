@@ -11,13 +11,13 @@ const mix = require('laravel-mix');
  |
  */
 
-mix
-    .js('resources/js/src/users/levels.js','public/js/users')
-    .js('resources/js/src/users/users.js','public/js/users')
-    .js('resources/js/src/dashboard/dashboard.js','public/js')
-    .js('resources/js/src/auth/register.js', 'public/js/auth')
-    .js('resources/js/src/auth/login.js', 'public/js/auth')
-    .js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix.js('resources/js/src/guests/guests.js','public/js/guests');
+    // .js('resources/js/src/users/levels.js','public/js/users')
+    // .js('resources/js/src/users/users.js','public/js/users')
+    // .js('resources/js/src/dashboard/dashboard.js','public/js')
+    // .js('resources/js/src/auth/register.js', 'public/js/auth')
+    // .js('resources/js/src/auth/login.js', 'public/js/auth')
+    // .js('resources/js/app.js', 'public/js')
+    // .postCss('resources/css/app.css', 'public/css', [
+    //     //
+    // ]);
