@@ -24,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address_1',
+        'address_2',
     ];
 
     /**
@@ -47,5 +50,13 @@ class User extends Authenticatable
 
     function levelObj(){
         return $this->belongsTo(UserLevel::class,'level','id');
+    }
+
+    function createdBy(){
+        return $this->belongsTo(User::class,'created_by','id');
+    }
+
+    function updatedBy(){
+        return $this->belongsTo(User::class,'updated_by','id');
     }
 }
