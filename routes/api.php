@@ -6,7 +6,10 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserLevelController;
 use App\Http\Controllers\User\UserPrivilegeController;
+
 use App\Http\Controllers\Room\RoomController;
+use App\Http\Controllers\Regions\RegionsController;
+use App\Http\Controllers\Guests\GuestsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +36,13 @@ Route::group(['prefix' => 'users'], function (){
     Route::any('/privileges', [UserPrivilegeController::class, 'crud'])->middleware('auth:api');
 });
 
-Route::group(['prefix' => 'rooms','middleware' => 'auth:api'],function (){
-   Route::any('/crud',[RoomController::class,'crud']);
+Route::group(['prefix' => 'regions','middleware' => 'auth:api'],function (){
+    Route::post('/provinces',[RegionsController::class,'province']);
+    Route::post('/city',[RegionsController::class,'city']);
+    Route::post('/district',[RegionsController::class,'district']);
+    Route::post('/village',[RegionsController::class,'village']);
+});
+
+Route::group(['prefix'=>'guests','middleware' => 'auth:api'],function (){
+   Route::any('/crud',[GuestsController::class,'crud']);
 });

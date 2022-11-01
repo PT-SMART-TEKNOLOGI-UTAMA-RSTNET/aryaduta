@@ -7,4 +7,5 @@
     "/js/auth/login.js": "/js/auth/login.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css"
+    "/js/guests/guests.js": "/js/guests/guests.js"
 }
