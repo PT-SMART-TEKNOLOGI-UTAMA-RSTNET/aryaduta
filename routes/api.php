@@ -6,9 +6,10 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserLevelController;
 use App\Http\Controllers\User\UserPrivilegeController;
+
+use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Regions\RegionsController;
 use App\Http\Controllers\Guests\GuestsController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
